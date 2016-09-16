@@ -1,32 +1,21 @@
-package com.autoservice.model;
+package com.autoservice.dto;
 
-import com.autoservice.dto.PersonDto;
+import com.autoservice.model.Person;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+public class PersonDto {
 
-@Entity(name = "person")
-public class Person {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
     private String personName;
 
-    @Column
     private Double personAge;
 
-    public static Person fromPersonDto(PersonDto dto) {
-        Person person = new Person();
-        person.setId(dto.getId());
-        person.setPersonAge(dto.getPersonAge());
-        person.setPersonName(dto.getPersonName());
-        return person;
+    public static PersonDto fromPerson(Person person) {
+        PersonDto dto = new PersonDto();
+        dto.setId(person.getId());
+        dto.setPersonAge(person.getPersonAge());
+        dto.setPersonName(person.getPersonName());
+        return dto;
     }
 
     public Long getId() {
