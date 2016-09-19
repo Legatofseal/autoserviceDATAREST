@@ -8,6 +8,7 @@ import com.autoservice.repo.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -18,7 +19,9 @@ public class PersonService {
     private final PersonRepository repository;
 
     @Autowired
-    public PersonService(PersonRepository repository) {this.repository = repository;}
+    public PersonService(PersonRepository repository) {
+        this.repository = repository;
+    }
 
     public PersonDto create(PersonDto personDto) {
         Person person = Person.fromPersonDto(personDto);
@@ -46,4 +49,14 @@ public class PersonService {
                 .map(PersonDto::fromPerson)
                 .collect(Collectors.toList());
     }
+
+    public List<Person> searchByName(String name) {
+
+        return repository.findByPersonName(name);
+    }
+    public List<Person> searchByAge(double age) {
+
+        return repository.findByPersonAge(age);
+    }
+
 }

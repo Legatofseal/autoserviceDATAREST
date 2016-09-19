@@ -11,7 +11,8 @@ import java.util.List;
 @Repository
 @SuppressWarnings("unused")
 public interface PersonRepository extends CrudRepository<Person, Long> {
-    List findByPersonName(@Param("name") String personName);
+    List<Person> findByPersonName(@Param("personName") String personName);
+    List<Person> findByPersonAge(@Param("personAge") double age);
 }
 
 

@@ -1,6 +1,7 @@
 package com.autoservice.rest;
 
 import com.autoservice.dto.PersonDto;
+import com.autoservice.model.Person;
 import com.autoservice.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -40,6 +41,21 @@ public class PersonController {
 
     @RequestMapping(method = RequestMethod.PUT)
     public PersonDto create(@RequestBody PersonDto personDto) {
-        return personService.create(personDto);
+       // return personService.create(personDto);
+        PersonDto dto = new PersonDto();
+
+        dto.setPersonAge(41);
+        dto.setPersonName("name1");
+        return personService.create(dto);
     }
+
+    @RequestMapping(value = "search/{name}", method = RequestMethod.GET)
+    public List<Person> searchByName(@PathVariable("name") String name) {
+        return personService.searchByName(name);
+    }
+    @RequestMapping(value = "search/byage/{age}", method = RequestMethod.GET)
+    public List<Person> searchByAge(@PathVariable("age") double age) {
+        return personService.searchByAge(age);
+    }
+
 }
