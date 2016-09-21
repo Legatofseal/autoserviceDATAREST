@@ -11,9 +11,13 @@ public class TypeVehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column
+    long clientID;
+
+    @Column
     Vehicle vehicle;
     @Column
     String txtVehicleName;
+
 
     public long getId() {
         return id;
@@ -23,6 +27,15 @@ public class TypeVehicle {
         this.id = id;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "clientID")
+    public long getClientID() {
+        return clientID;
+    }
+
+    public void setClientID(long clientID) {
+        this.clientID = clientID;
+    }
 
     public String getTxtVehicleName() {
         return txtVehicleName;

@@ -1,6 +1,7 @@
 package com.autoservice.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by Legat on 9/19/2016.
@@ -20,7 +21,7 @@ public class Client {
     @Column
     String phone;
     @Column
-    TypeVehicle typeVehicle;
+    Set<TypeVehicle> typeVehicle;
     @Column
     Address address;
     @Column
@@ -66,11 +67,12 @@ public class Client {
         this.phone = phone;
     }
 
-    public TypeVehicle getTypeVehicle() {
+    @OneToMany(mappedBy = "typeVehicle", cascade = CascadeType.ALL)
+    public Set<TypeVehicle> getTypeVehicle() {
         return typeVehicle;
     }
 
-    public void setTypeVehicle(TypeVehicle typeVehicle) {
+    public void setTypeVehicle(Set<TypeVehicle> typeVehicle) {
         this.typeVehicle = typeVehicle;
     }
 
