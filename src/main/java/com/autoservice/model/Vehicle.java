@@ -10,8 +10,9 @@ public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column
-    String tVehicle;
+    @ManyToOne
+    @JoinColumn(name = "typeVehicle_id")
+    TypeVehicle typeVehicle;
     @Column
     String carManufacture;
     @Column
@@ -25,12 +26,12 @@ public class Vehicle {
         this.id = id;
     }
 
-    public String getTypeVehicle() {
-        return tVehicle;
+    public TypeVehicle getTypeVehicle() {
+        return typeVehicle;
     }
 
-    public void setTypeVehicle(String typeVehicle) {
-        this.tVehicle = typeVehicle;
+    public void setTypeVehicle(TypeVehicle typeVehicle) {
+        this.typeVehicle = typeVehicle;
     }
 
     public String getCarManufacture() {
@@ -49,12 +50,5 @@ public class Vehicle {
         this.carModel = carModel;
     }
 
-    @Override
-    public String toString() {
-        return "TypeVehicle{" +
-                "typeVehicle='" + tVehicle + '\'' +
-                ", carManufacture='" + carManufacture + '\'' +
-                ", carModel='" + carModel + '\'' +
-                '}';
-    }
+
 }

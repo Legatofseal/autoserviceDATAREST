@@ -1,6 +1,6 @@
 package com.autoservice.service;
 
-import com.autoservice.dto.PersonDto;
+
 import com.autoservice.exception.AlreadyExistsException;
 import com.autoservice.exception.NotFoundException;
 import com.autoservice.model.Person;
@@ -23,8 +23,8 @@ public class PersonService {
         this.repository = repository;
     }
 
-    public PersonDto create(PersonDto personDto) {
-        Person person = Person.fromPersonDto(personDto);
+    public Person create(Person person) {
+
 
         // Example of custom logic
         if (person.getId() != null && repository.findOne(person.getId()) != null) {
@@ -32,21 +32,20 @@ public class PersonService {
         }
 
         Person result = repository.save(person);
-        return PersonDto.fromPerson(result);
+        return person;
     }
 
-    public PersonDto get(Long id) {
+    public Person get(Long id) {
         Person person = repository.findOne(id);
         if (person == null) {
             throw new NotFoundException("Person", id);
         }
-        return PersonDto.fromPerson(person);
+        return person;
     }
 
-    public List<PersonDto> getAll() {
+    public List<Person> getAll() {
         // Java 8 magic!
         return StreamSupport.stream(repository.findAll().spliterator(), false)
-                .map(PersonDto::fromPerson)
                 .collect(Collectors.toList());
     }
 

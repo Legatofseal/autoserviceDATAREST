@@ -1,6 +1,6 @@
 package com.autoservice.model;
 
-import com.autoservice.dto.PersonDto;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,13 +21,6 @@ public class Person {
     @Column
     private Double personAge;
 
-    public static Person fromPersonDto(PersonDto dto) {
-        Person person = new Person();
-        person.setId(dto.getId());
-        person.setPersonAge(dto.getPersonAge());
-        person.setPersonName(dto.getPersonName());
-        return person;
-    }
 
     public Long getId() {
         return id;

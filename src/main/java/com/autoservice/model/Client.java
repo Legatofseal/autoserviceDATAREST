@@ -8,30 +8,38 @@ import java.util.Set;
  */
 @Entity
 public class Client {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column
     String name;
+
     @Column
     String email;
+
     @Column
     String password;
+
     @Column
     String phone;
-    @Column
+
+    @OneToMany(mappedBy = "client")
     Set<TypeVehicle> typeVehicle;
-    @Column
+
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="address_id")
     Address address;
+
     @Column
     String avatar;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -67,7 +75,6 @@ public class Client {
         this.phone = phone;
     }
 
-    @OneToMany(mappedBy = "typeVehicle", cascade = CascadeType.ALL)
     public Set<TypeVehicle> getTypeVehicle() {
         return typeVehicle;
     }

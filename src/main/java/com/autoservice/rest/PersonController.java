@@ -1,6 +1,6 @@
 package com.autoservice.rest;
 
-import com.autoservice.dto.PersonDto;
+
 import com.autoservice.model.Person;
 import com.autoservice.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,26 +30,26 @@ public class PersonController {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    public PersonDto get(@PathVariable("id") Long id) {
+    public Person get(@PathVariable("id") Long id) {
         return personService.get(id);
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<PersonDto> getAll() {
+    public List<Person> getAll() {
         return personService.getAll();
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public PersonDto create(@RequestBody PersonDto personDto) {
+    public Person create(@RequestBody Person personDto) {
        // return personService.create(personDto);
-        PersonDto dto = new PersonDto();
+        Person dto = new Person();
 
         dto.setPersonAge(41);
         dto.setPersonName("name1");
         return personService.create(dto);
     }
 
-    @RequestMapping(value = "search/{name}", method = RequestMethod.GET)
+    @RequestMapping(value = "search/byname/{name}", method = RequestMethod.GET)
     public List<Person> searchByName(@PathVariable("name") String name) {
         return personService.searchByName(name);
     }

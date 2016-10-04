@@ -1,23 +1,27 @@
 package com.autoservice.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by Legat on 9/19/2016.
  */
 @Entity
 public class TypeVehicle {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column
-    long clientID;
 
-    @Column
-    Vehicle vehicle;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    Client client;
+
+    @OneToMany(mappedBy = "typeVehicle")
+    Set<Vehicle> vehicles;
+
     @Column
     String txtVehicleName;
-
 
     public long getId() {
         return id;
@@ -27,14 +31,12 @@ public class TypeVehicle {
         this.id = id;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "clientID")
-    public long getClientID() {
-        return clientID;
+    public Client getClient() {
+        return client;
     }
 
-    public void setClientID(long clientID) {
-        this.clientID = clientID;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public String getTxtVehicleName() {
@@ -45,13 +47,12 @@ public class TypeVehicle {
         this.txtVehicleName = txtVehicleName;
     }
 
-    public Vehicle getVehicle() {
-        return vehicle;
+
+    public Set<Vehicle> getVehicles() {
+        return vehicles;
     }
 
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
+    public void setVehicles(Set<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
-
-
 }
