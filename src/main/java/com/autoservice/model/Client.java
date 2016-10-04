@@ -19,7 +19,18 @@ public class Client {
     @Column
     String email;
 
+    public Client(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.address = null;
+    }
+
+    public Client() {
+    }
+
     @Column
+
     String password;
 
     @Column

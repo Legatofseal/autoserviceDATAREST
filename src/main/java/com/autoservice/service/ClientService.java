@@ -30,7 +30,14 @@ public class ClientService {
         }
         return client;
     }
-
+    public boolean ChkClientData(String email, String password){
+        if (clientRepository.findByEmailAndPassword(email, password).size()!=0){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     public List<Client> getAll() {
         // Java 8 magic!
         return StreamSupport.stream(clientRepository.findAll().spliterator(), false)
@@ -47,5 +54,17 @@ public class ClientService {
         Client result = clientRepository.save(client);
         return client;
     }
+   public List<Client> getClientByMail(String email){
+        return clientRepository.findByEmail(email);
+    }
 
+    public void deleteByEmail(String email){
+         clientRepository.deleteByEmail(email);
+    }
+
+    public Client updateEmailByID(Long id, String email){
+        Client client = clientRepository.findOne(id);
+        client.setEmail(email);
+        return clientRepository.save(client);
+    }
 }
