@@ -11,12 +11,36 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne
-    @JoinColumn(name = "typeVehicle_id")
-    TypeVehicle typeVehicle;
+    @JoinColumn(name = "client_id")
+    Client client;
     @Column
     String carManufacture;
     @Column
     String carModel;
+
+    public TypeVehicle getTypeVehicle() {
+        return typeVehicle;
+    }
+
+    public void setTypeVehicle(TypeVehicle typeVehicle) {
+        this.typeVehicle = typeVehicle;
+    }
+
+    @Column
+
+    String serial;
+
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="typeVehicle_id")
+    TypeVehicle typeVehicle;
+
+    public String getSerial() {
+        return serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
+    }
 
     public long getId() {
         return id;
@@ -26,12 +50,12 @@ public class Vehicle {
         this.id = id;
     }
 
-    public TypeVehicle getTypeVehicle() {
-        return typeVehicle;
+    public Client getClient() {
+        return client;
     }
 
-    public void setTypeVehicle(TypeVehicle typeVehicle) {
-        this.typeVehicle = typeVehicle;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public String getCarManufacture() {

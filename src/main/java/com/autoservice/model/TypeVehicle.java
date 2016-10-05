@@ -14,11 +14,10 @@ public class TypeVehicle {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "client_id")
-    Client client;
+    @JoinColumn(name = "vehicle_id")
+    Vehicle vehicle;
 
-    @OneToMany(mappedBy = "typeVehicle")
-    Set<Vehicle> vehicles;
+
 
     @Column
     String txtVehicleName;
@@ -31,13 +30,7 @@ public class TypeVehicle {
         this.id = id;
     }
 
-    public Client getClient() {
-        return client;
-    }
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
 
     public String getTxtVehicleName() {
         return txtVehicleName;
@@ -48,11 +41,5 @@ public class TypeVehicle {
     }
 
 
-    public Set<Vehicle> getVehicles() {
-        return vehicles;
-    }
 
-    public void setVehicles(Set<Vehicle> vehicles) {
-        this.vehicles = vehicles;
-    }
 }

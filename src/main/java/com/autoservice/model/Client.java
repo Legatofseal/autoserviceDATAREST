@@ -1,6 +1,8 @@
 package com.autoservice.model;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -37,7 +39,72 @@ public class Client {
     String phone;
 
     @OneToMany(mappedBy = "client")
-    Set<TypeVehicle> typeVehicle;
+    Set<Vehicle> vehicles=new Set<Vehicle>() {
+        @Override
+        public int size() {
+            return 0;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return false;
+        }
+
+        @Override
+        public boolean contains(Object o) {
+            return false;
+        }
+
+        @Override
+        public Iterator<Vehicle> iterator() {
+            return null;
+        }
+
+        @Override
+        public Object[] toArray() {
+            return new Object[0];
+        }
+
+        @Override
+        public <T> T[] toArray(T[] a) {
+            return null;
+        }
+
+        @Override
+        public boolean add(Vehicle vehicle) {
+            return false;
+        }
+
+        @Override
+        public boolean remove(Object o) {
+            return false;
+        }
+
+        @Override
+        public boolean containsAll(Collection<?> c) {
+            return false;
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends Vehicle> c) {
+            return false;
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> c) {
+            return false;
+        }
+
+        @Override
+        public boolean removeAll(Collection<?> c) {
+            return false;
+        }
+
+        @Override
+        public void clear() {
+
+        }
+    };
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="address_id")
@@ -86,12 +153,12 @@ public class Client {
         this.phone = phone;
     }
 
-    public Set<TypeVehicle> getTypeVehicle() {
-        return typeVehicle;
+    public Set<Vehicle> getVehicles() {
+        return vehicles;
     }
 
-    public void setTypeVehicle(Set<TypeVehicle> typeVehicle) {
-        this.typeVehicle = typeVehicle;
+    public void setVehicles(Set<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 
     public Address getAddress() {
@@ -116,9 +183,11 @@ public class Client {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +
-                ", typeVehicle=" + typeVehicle +
+                ", vehicles=" + vehicles +
                 ", address=" + address +
+                ", avatar='" + avatar + '\'' +
                 '}';
     }
 }
