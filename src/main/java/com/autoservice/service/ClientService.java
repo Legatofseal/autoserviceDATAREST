@@ -2,6 +2,7 @@ package com.autoservice.service;
 
 import com.autoservice.exception.AlreadyExistsException;
 import com.autoservice.exception.NotFoundException;
+import com.autoservice.model.Address;
 import com.autoservice.model.Client;
 import com.autoservice.model.Person;
 import com.autoservice.repo.ClientRepository;
@@ -66,5 +67,20 @@ public class ClientService {
         Client client = clientRepository.findOne(id);
         client.setEmail(email);
         return clientRepository.save(client);
+    }
+    public void updateAvatarByID(Long id, String avatar){
+        Client client = clientRepository.findOne(id);
+        client.setAvatar(avatar);
+       clientRepository.save(client);
+    }
+    public void updatePasswordByID(Long id, String password){
+        Client client = clientRepository.findOne(id);
+        client.setPassword(password);
+        clientRepository.save(client);
+    }
+    public void updateAddressByID(Long id, Address address){
+        Client client = clientRepository.findOne(id);
+        client.setAddress(address);
+        clientRepository.save(client);
     }
 }

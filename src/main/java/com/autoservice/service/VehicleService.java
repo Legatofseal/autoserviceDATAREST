@@ -1,6 +1,8 @@
 package com.autoservice.service;
 
+import com.autoservice.exception.AlreadyExistsException;
 import com.autoservice.exception.NotFoundException;
+import com.autoservice.model.Client;
 import com.autoservice.model.TypeVehicle;
 import com.autoservice.model.Vehicle;
 import com.autoservice.repo.VehicleRepository;
@@ -23,5 +25,21 @@ public class VehicleService {
             throw new NotFoundException("Vehicle", id);
         }
         return vehicle;
+    }
+
+
+    public Vehicle create(Vehicle vehicle) {
+
+
+        // Example of custom logic
+        if (vehicle.getId() != null && vehicleRepository.findOne(vehicle.getId()) != null) {
+            throw new AlreadyExistsException("Client", vehicle.getId());
+        }
+
+        Vehicle result = vehicleRepository.save(vehicle);
+        return result;
+    }
+    public void deleteById(Long id){
+        vehicleRepository.deleteById(id);
     }
 }

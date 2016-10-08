@@ -1,8 +1,15 @@
 package com.autoservice.model;
 
-import javax.persistence.*;
-import java.util.Collection;
-import java.util.Iterator;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -16,10 +23,26 @@ public class Client {
     private Long id;
 
     @Column
-    String name;
+    private String name;
 
     @Column
-    String email;
+    private String email;
+
+    @Column
+    private String password;
+
+    @Column
+    private String phone;
+
+    @OneToMany(mappedBy = "client")
+    private Set<Vehicle> vehicles = new HashSet<>();
+
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="address_id")
+    private Address address;
+
+    @Column
+    private String avatar;
 
     public Client(String name, String email, String password) {
         this.name = name;
@@ -30,88 +53,6 @@ public class Client {
 
     public Client() {
     }
-
-    @Column
-
-    String password;
-
-    @Column
-    String phone;
-
-    @OneToMany(mappedBy = "client")
-    Set<Vehicle> vehicles=new Set<Vehicle>() {
-        @Override
-        public int size() {
-            return 0;
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return false;
-        }
-
-        @Override
-        public boolean contains(Object o) {
-            return false;
-        }
-
-        @Override
-        public Iterator<Vehicle> iterator() {
-            return null;
-        }
-
-        @Override
-        public Object[] toArray() {
-            return new Object[0];
-        }
-
-        @Override
-        public <T> T[] toArray(T[] a) {
-            return null;
-        }
-
-        @Override
-        public boolean add(Vehicle vehicle) {
-            return false;
-        }
-
-        @Override
-        public boolean remove(Object o) {
-            return false;
-        }
-
-        @Override
-        public boolean containsAll(Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public boolean addAll(Collection<? extends Vehicle> c) {
-            return false;
-        }
-
-        @Override
-        public boolean retainAll(Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public boolean removeAll(Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public void clear() {
-
-        }
-    };
-
-    @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="address_id")
-    Address address;
-
-    @Column
-    String avatar;
 
     public Long getId() {
         return id;

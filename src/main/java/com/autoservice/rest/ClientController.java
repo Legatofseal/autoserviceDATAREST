@@ -90,6 +90,21 @@ public class ClientController {
         client1.setPassword("legat");
         return clientService.create(client1);
 
-//dsa
+
+    }
+
+    @RequestMapping(value = "/updateavatarbyid/{id},{avatar}", method = RequestMethod.PATCH)
+    public void updateAvatarById(@PathVariable("id") Long id, @PathVariable("avatar") String avatar) {
+        clientService.updateAvatarByID(id, avatar);
+    }
+    @RequestMapping(value = "/updatepasswordbyid/{id},{avatar}", method = RequestMethod.PATCH)
+    public void updatePasswordById(@PathVariable("id") Long id, @PathVariable("password") String password) {
+        clientService.updatePasswordByID(id, password);
+    }
+    @RequestMapping(value = "/updateaddressbyid/", method = RequestMethod.PATCH)
+    public void updateAddressById(@PathVariable("id") Long id) {
+       Address address = new Address();
+        clientService.updateAddressByID(id, address);
+
     }
 }
