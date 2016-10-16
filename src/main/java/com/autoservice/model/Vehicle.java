@@ -10,9 +10,11 @@ public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "client_id")
     Client client;
+
     @Column
     String carManufacture;
     @Column

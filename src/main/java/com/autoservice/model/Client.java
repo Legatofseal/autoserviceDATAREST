@@ -37,6 +37,11 @@ public class Client {
     @OneToMany(mappedBy = "client")
     private Set<Vehicle> vehicles = new HashSet<>();
 
+
+
+  //  @OneToMany(mappedBy = "client")
+   // private Set<Comment> comments = new HashSet<>();
+
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="address_id")
     private Address address;

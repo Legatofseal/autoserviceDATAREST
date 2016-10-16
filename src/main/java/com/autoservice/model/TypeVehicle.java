@@ -17,6 +17,10 @@ public class TypeVehicle {
     @JoinColumn(name = "vehicle_id")
     Vehicle vehicle;
 
+    @ManyToOne
+    @JoinColumn(name = "contractor_id")
+    Contractor contractor;
+
 
 
     @Column
@@ -40,6 +44,20 @@ public class TypeVehicle {
         this.txtVehicleName = txtVehicleName;
     }
 
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
 
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public Contractor getContractor() {
+        return contractor;
+    }
+
+    public void setContractor(Contractor contractor) {
+        this.contractor = contractor;
+    }
 
 }
