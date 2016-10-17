@@ -29,7 +29,6 @@ public class Vehicle {
     }
 
     @Column
-
     String serial;
 
     @OneToOne(cascade = {CascadeType.ALL})

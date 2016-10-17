@@ -2,11 +2,13 @@ package com.autoservice.service;
 
 import com.autoservice.exception.AlreadyExistsException;
 import com.autoservice.exception.NotFoundException;
-import com.autoservice.model.Client;
 import com.autoservice.model.Contractor;
 import com.autoservice.repo.ContractorRepository;
+import com.autoservice.repo.TypeServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by Legat on 10/15/2016.
@@ -14,10 +16,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class ContractorService {
     private final ContractorRepository contractorRepository;
+    private final TypeServiceRepository typeServiceRepository;
 
     @Autowired
-    public ContractorService(ContractorRepository contractorRepository) {
+    public ContractorService(ContractorRepository contractorRepository, TypeServiceRepository typeServiceRepository) {
         this.contractorRepository = contractorRepository;
+        this.typeServiceRepository = typeServiceRepository;
     }
 
     public Contractor get(Long id) {
@@ -38,4 +42,8 @@ public class ContractorService {
         Contractor result = contractorRepository.save(contractor);
         return contractor;
     }
+
+   // public List<Contractor> getByTypeService (Long id){
+       // return contractorRepository.findByTypeservice(typeServiceRepository.findOne(id));
+  //  }
 }

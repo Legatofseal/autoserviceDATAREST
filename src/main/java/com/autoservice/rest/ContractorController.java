@@ -22,18 +22,21 @@ public class ContractorController {
 
     @RequestMapping(value = "put", method = RequestMethod.PUT)
     public Contractor create() {
-        // return personService.create(personDto);
+
         Contractor contractor = new Contractor("test", "test@test");
         return contractorService.create(contractor);
-
-
     }
+
     @RequestMapping(value = "/getbyid/{id}", method = RequestMethod.GET)
     public Contractor getById(@PathVariable("id") Long id) {
-        // return personService.create(personDto);
 
         return contractorService.get(id);
-
-
     }
+
+    @RequestMapping(value = "/getbytypeservice/{id}", method = RequestMethod.GET)
+    public Contractor getByTypeOfService(@PathVariable("id") Long id) {
+
+        return contractorService.get(id);
+    }
+
 }

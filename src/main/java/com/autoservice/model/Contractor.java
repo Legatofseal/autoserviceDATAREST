@@ -17,7 +17,7 @@ public class Contractor {
     String name;
 
     @OneToMany(mappedBy = "contractor")
-    private Set<TypeService> typeServices = new HashSet<>();
+    public Set<TypeService> typeServices;
 
     @OneToMany(mappedBy = "contractor")
     public Set<Rangeworks> rangeWorkses = new HashSet<>();
@@ -52,7 +52,10 @@ public class Contractor {
     @JoinColumn(name="address_id")
     private Address address;
 
-    @OneToMany(mappedBy = "contractor")
+    @ManyToMany
+    @JoinTable(name = "type_vehicle",
+            joinColumns = {@JoinColumn(name = "contractor_id") },
+            inverseJoinColumns = { @JoinColumn(name = "typevehicle_id") })
     private Set<TypeVehicle> typeVehicles = new HashSet<>();
 
     public Contractor() {

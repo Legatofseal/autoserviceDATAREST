@@ -1,6 +1,7 @@
 package com.autoservice.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -13,13 +14,12 @@ public class TypeVehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "vehicle_id")
     Vehicle vehicle;
 
-    @ManyToOne
-    @JoinColumn(name = "contractor_id")
-    Contractor contractor;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "contractor")
+    Set<Contractor> contractors= new HashSet<Contractor>();
 
 
 
@@ -52,12 +52,11 @@ public class TypeVehicle {
         this.vehicle = vehicle;
     }
 
-    public Contractor getContractor() {
-        return contractor;
+    public Set<Contractor> getContractors() {
+        return contractors;
     }
 
-    public void setContractor(Contractor contractor) {
-        this.contractor = contractor;
+    public void setContractors(Set<Contractor> contractors) {
+        this.contractors = contractors;
     }
-
 }
