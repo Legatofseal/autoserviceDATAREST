@@ -31,6 +31,7 @@ public class ContractorService {
         }
         return contractor;
     }
+
     public Contractor create(Contractor contractor) {
 
 
@@ -43,7 +44,7 @@ public class ContractorService {
         return contractor;
     }
 
-   // public List<Contractor> getByTypeService (Long id){
-       // return contractorRepository.findByTypeservice(typeServiceRepository.findOne(id));
-  //  }
+    public List<Contractor> getByTypeService(Long id) {
+         return contractorRepository.FindByTypeservice(typeServiceRepository.findOne(id));
+    }
 }

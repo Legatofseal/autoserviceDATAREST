@@ -22,15 +22,19 @@ public class Contractor {
             inverseJoinColumns = { @JoinColumn(name = "typeservice_id") })
     public Set<TypeService> typeServices;
 
-    @OneToMany(mappedBy = "contractor")
-    public Set<Rangeworks> rangeWorkses = new HashSet<>();
+    @ManyToMany
+    @JoinTable(name = "rangeworks_join",
+            joinColumns = {@JoinColumn(name = "contractor_id") },
+            inverseJoinColumns = { @JoinColumn(name = "rangeworks_id") })
+    public Set<Rangeworks> rangeworks = new HashSet<>();
 
-    public Set<Rangeworks> getRangeWorkses() {
-        return rangeWorkses;
+
+    public Set<Rangeworks> getRangeworks() {
+        return rangeworks;
     }
 
-    public void setRangeWorkses(Set<Rangeworks> rangeWorkses) {
-        this.rangeWorkses = rangeWorkses;
+    public void setRangeworks(Set<Rangeworks> rangeworks) {
+        this.rangeworks = rangeworks;
     }
 
     @Column

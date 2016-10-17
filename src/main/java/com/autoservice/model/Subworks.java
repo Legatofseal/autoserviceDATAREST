@@ -1,7 +1,9 @@
 package com.autoservice.model;
 
 import javax.persistence.*;
-
+import java.util.HashSet;
+import java.util.HashSet;
+import java.util.Set;
 /**
  * Created by Legat on 10/13/2016.
  */
@@ -13,9 +15,8 @@ public class Subworks {
     @Column
     String name;
 
-    @ManyToOne
-    @JoinColumn(name = "rangeworks_id")
-    Rangeworks rangeworks;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "subworks")
+    Set<Rangeworks> rangeworks = new HashSet<Rangeworks>();
 
 
     public long getId() {
@@ -34,11 +35,11 @@ public class Subworks {
         this.name = name;
     }
 
-    public Rangeworks getRangeworks() {
+    public Set<Rangeworks> getRangeworks() {
         return rangeworks;
     }
 
-    public void setRangeworks(Rangeworks rangeworks) {
+    public void setRangeworks(Set<Rangeworks> rangeworks) {
         this.rangeworks = rangeworks;
     }
 }

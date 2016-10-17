@@ -16,7 +16,10 @@ public class Rangeworks {
     @Column
     String name;
 
-    @OneToMany(mappedBy = "rangeworks")
+    @ManyToMany
+    @JoinTable(name = "subworks_join",
+            joinColumns = {@JoinColumn(name = "rangeworks_id") },
+            inverseJoinColumns = { @JoinColumn(name = "subworks_id") })
     private Set<Subworks> subworks = new HashSet<>();
 
     @Column
@@ -25,9 +28,8 @@ public class Rangeworks {
     @Column
     String avatar;
 
-    @ManyToOne
-    @JoinColumn(name = "contractor_id")
-    Contractor contractor;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "rangeworks")
+    Set<Contractor> contractor = new HashSet<Contractor>();
 
     public Long getId() {
         return id;
@@ -69,11 +71,11 @@ public class Rangeworks {
         this.avatar = avatar;
     }
 
-    public Contractor getContractor() {
+    public Set<Contractor> getContractor() {
         return contractor;
     }
 
-    public void setContractor(Contractor contractor) {
+    public void setContractor(Set<Contractor> contractor) {
         this.contractor = contractor;
     }
 }
