@@ -16,7 +16,10 @@ public class Contractor {
     @Column
     String name;
 
-    @OneToMany(mappedBy = "contractor")
+    @ManyToMany
+    @JoinTable(name = "type_service_join",
+            joinColumns = {@JoinColumn(name = "contractor_id") },
+            inverseJoinColumns = { @JoinColumn(name = "typeservice_id") })
     public Set<TypeService> typeServices;
 
     @OneToMany(mappedBy = "contractor")
@@ -53,7 +56,7 @@ public class Contractor {
     private Address address;
 
     @ManyToMany
-    @JoinTable(name = "type_vehicle",
+    @JoinTable(name = "type_vehicle_join",
             joinColumns = {@JoinColumn(name = "contractor_id") },
             inverseJoinColumns = { @JoinColumn(name = "typevehicle_id") })
     private Set<TypeVehicle> typeVehicles = new HashSet<>();

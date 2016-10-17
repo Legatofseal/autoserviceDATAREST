@@ -18,8 +18,8 @@ public class TypeVehicle {
     @JoinColumn(name = "vehicle_id")
     Vehicle vehicle;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "contractor")
-    Set<Contractor> contractors= new HashSet<Contractor>();
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "typeVehicles")
+    Set<Contractor> contractor= new HashSet<Contractor>();
 
 
 
@@ -53,10 +53,10 @@ public class TypeVehicle {
     }
 
     public Set<Contractor> getContractors() {
-        return contractors;
+        return contractor;
     }
 
     public void setContractors(Set<Contractor> contractors) {
-        this.contractors = contractors;
+        this.contractor = contractors;
     }
 }
