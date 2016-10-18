@@ -14,9 +14,8 @@ public class TypeVehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne
-    @JoinColumn(name = "vehicle_id")
-    Vehicle vehicle;
+    @OneToMany(mappedBy = "typeVehicle")
+    private Set<Vehicle> vehicles = new HashSet<Vehicle>();
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "typeVehicles")
     Set<Contractor> contractor= new HashSet<Contractor>();
@@ -24,7 +23,7 @@ public class TypeVehicle {
 
 
     @Column
-    String txtVehicleName;
+    String typeName;
 
     public long getId() {
         return id;
@@ -35,21 +34,28 @@ public class TypeVehicle {
     }
 
 
-
-    public String getTxtVehicleName() {
-        return txtVehicleName;
+    public Set<Contractor> getContractor() {
+        return contractor;
     }
 
-    public void setTxtVehicleName(String txtVehicleName) {
-        this.txtVehicleName = txtVehicleName;
+    public void setContractor(Set<Contractor> contractor) {
+        this.contractor = contractor;
     }
 
-    public Vehicle getVehicle() {
-        return vehicle;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public Set<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(Set<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 
     public Set<Contractor> getContractors() {

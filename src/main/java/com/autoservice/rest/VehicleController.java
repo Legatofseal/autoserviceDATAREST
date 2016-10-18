@@ -24,14 +24,8 @@ public class VehicleController {
     }
 
     @RequestMapping(value = "/createvehicle/", method = RequestMethod.PUT)
-    public Vehicle addVehicle() {
-        Vehicle vehicle = new Vehicle();
-        vehicle.setCarModel("Honda1");
-        TypeVehicle typeVehicle = new TypeVehicle();
-        typeVehicle.setTxtVehicleName("bigvehicle1");
-        // TypeVehicle  test = new TypeVehicle();
-        vehicle.setTypeVehicle(typeVehicle);
-        return vehicleService.create(vehicle);
+    public void addVehicle() {
+
     }
 
     @RequestMapping(value = "/deletevehicle/{id}", method = RequestMethod.DELETE)

@@ -38,12 +38,11 @@ public class Client {
     private Set<Vehicle> vehicles = new HashSet<>();
 
 
-
-  //  @OneToMany(mappedBy = "client")
-   // private Set<Comment> comments = new HashSet<>();
+    @OneToMany(mappedBy = "client")
+    private Set<Comment> comments = new HashSet<>();
 
     @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="address_id")
+    @JoinColumn(name = "address_id")
     private Address address;
 
     @Column
@@ -121,6 +120,14 @@ public class Client {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override

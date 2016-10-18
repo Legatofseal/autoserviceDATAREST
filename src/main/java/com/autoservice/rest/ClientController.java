@@ -59,51 +59,35 @@ public class ClientController {
         return clientService.create(new Client(name, mail, password));
 
     }
+
     @RequestMapping(value = "/deleteclient/{mail:.+}", method = RequestMethod.DELETE)
     public void deleteClient(@PathVariable("mail") String mail) {
-         clientService.deleteByEmail(mail);
+        clientService.deleteByEmail(mail);
     }
+
     @RequestMapping(value = "/updatemailbyid/{id},{mail:.+}", method = RequestMethod.PATCH)
     public Client updateEmailById(@PathVariable("id") Long id, @PathVariable("mail") String mail) {
-       return clientService.updateEmailByID(id,mail);
+        return clientService.updateEmailByID(id, mail);
     }
 
     @RequestMapping(value = "put", method = RequestMethod.PUT)
-    public Client create() {
+    public void create() {
         // return personService.create(personDto);
-        Client client1 = new Client();
-        Address address = new Address();
-        Vehicle vehicle = new Vehicle();
-        vehicle.setCarModel("Honda");
-        TypeVehicle typeVehicle = new TypeVehicle();
-        typeVehicle.setTxtVehicleName("bigvehicle");
-       // TypeVehicle  test = new TypeVehicle();
-        vehicle.setTypeVehicle(typeVehicle);
-        address.setArea("North1");
-        address.setCity("batyam1");
-        address.setHouse(2);
-        address.setStreet("mivca");
-        client1.getVehicles().add(vehicle);
-        client1.setAddress(address);
-        client1.setEmail("s@2.ru222");
-        client1.setName("Polon");
-        client1.setPassword("legat");
-        return clientService.create(client1);
-
-
     }
 
     @RequestMapping(value = "/updateavatarbyid/{id},{avatar}", method = RequestMethod.PATCH)
     public void updateAvatarById(@PathVariable("id") Long id, @PathVariable("avatar") String avatar) {
         clientService.updateAvatarByID(id, avatar);
     }
+
     @RequestMapping(value = "/updatepasswordbyid/{id},{avatar}", method = RequestMethod.PATCH)
     public void updatePasswordById(@PathVariable("id") Long id, @PathVariable("password") String password) {
         clientService.updatePasswordByID(id, password);
     }
+
     @RequestMapping(value = "/updateaddressbyid/", method = RequestMethod.PATCH)
     public void updateAddressById(@PathVariable("id") Long id) {
-       Address address = new Address();
+        Address address = new Address();
         clientService.updateAddressByID(id, address);
 
     }

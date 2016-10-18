@@ -23,7 +23,6 @@ public class Comment implements Comparable<Comment> {
     }
 
     @ManyToOne
-
     @JoinColumn(name = "contractor_id")
     Contractor contractor;
 

@@ -1,5 +1,7 @@
 package com.autoservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.HashSet;
@@ -18,6 +20,12 @@ public class Subworks {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "subworks")
     Set<Rangeworks> rangeworks = new HashSet<Rangeworks>();
 
+    public Subworks() {
+    }
+
+    public Subworks(String name) {
+        this.name = name;
+    }
 
     public long getId() {
         return id;
@@ -35,6 +43,8 @@ public class Subworks {
         this.name = name;
     }
 
+
+    @JsonIgnore
     public Set<Rangeworks> getRangeworks() {
         return rangeworks;
     }

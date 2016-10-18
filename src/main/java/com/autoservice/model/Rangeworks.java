@@ -1,5 +1,7 @@
 package com.autoservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +18,7 @@ public class Rangeworks {
     @Column
     String name;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "subworks_join",
             joinColumns = {@JoinColumn(name = "rangeworks_id") },
             inverseJoinColumns = { @JoinColumn(name = "subworks_id") })
@@ -24,6 +26,13 @@ public class Rangeworks {
 
     @Column
     String url;
+
+    public Rangeworks() {
+    }
+
+    public Rangeworks(String name) {
+        this.name = name;
+    }
 
     @Column
     String avatar;
@@ -70,7 +79,7 @@ public class Rangeworks {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
-
+    @JsonIgnore
     public Set<Contractor> getContractor() {
         return contractor;
     }

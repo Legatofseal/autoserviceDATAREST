@@ -31,9 +31,12 @@ public class Vehicle {
     @Column
     String serial;
 
-    @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="typeVehicle_id")
+    @ManyToOne
+    @JoinColumn(name = "typeVehicle_id")
     TypeVehicle typeVehicle;
+
+
+
 
     public String getSerial() {
         return serial;

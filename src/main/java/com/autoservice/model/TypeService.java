@@ -1,5 +1,7 @@
 package com.autoservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.HashSet;
@@ -13,8 +15,11 @@ public class TypeService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+
     @Column
     String name;
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "typeServices")
     Set<Contractor> contractor = new HashSet<Contractor>();
 

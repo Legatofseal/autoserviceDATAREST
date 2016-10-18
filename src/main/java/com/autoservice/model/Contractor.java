@@ -16,16 +16,16 @@ public class Contractor {
     @Column
     String name;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "type_service_join",
-            joinColumns = {@JoinColumn(name = "contractor_id") },
-            inverseJoinColumns = { @JoinColumn(name = "typeservice_id") })
-    public Set<TypeService> typeServices;
+            joinColumns = {@JoinColumn(name = "contractor_id")},
+            inverseJoinColumns = {@JoinColumn(name = "typeservice_id")})
+    public Set<TypeService> typeServices = new HashSet<TypeService>();
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "rangeworks_join",
-            joinColumns = {@JoinColumn(name = "contractor_id") },
-            inverseJoinColumns = { @JoinColumn(name = "rangeworks_id") })
+            joinColumns = {@JoinColumn(name = "contractor_id")},
+            inverseJoinColumns = {@JoinColumn(name = "rangeworks_id")})
     public Set<Rangeworks> rangeworks = new HashSet<>();
 
 
@@ -56,20 +56,25 @@ public class Contractor {
     String workingHours;
 
     @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="address_id")
+    @JoinColumn(name = "address_id")
     private Address address;
 
     @ManyToMany
     @JoinTable(name = "type_vehicle_join",
-            joinColumns = {@JoinColumn(name = "contractor_id") },
-            inverseJoinColumns = { @JoinColumn(name = "typevehicle_id") })
+            joinColumns = {@JoinColumn(name = "contractor_id")},
+            inverseJoinColumns = {@JoinColumn(name = "typevehicle_id")})
     private Set<TypeVehicle> typeVehicles = new HashSet<>();
 
     public Contractor() {
     }
 
-   // @OneToMany(mappedBy = "contractor")
-//    private Set<Comment> comments = new HashSet<>();
+    public Contractor(String name) {
+        this.name = name;
+
+    }
+
+    @OneToMany(mappedBy = "contractor")
+    private Set<Comment> comments = new HashSet<>();
 
     public Contractor(String name, String email) {
         this.name = name;
