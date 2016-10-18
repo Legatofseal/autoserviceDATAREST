@@ -15,8 +15,7 @@ public class Vehicle {
     @JoinColumn(name = "client_id")
     Client client;
 
-    @Column
-    String carManufacture;
+
     @Column
     String carModel;
 
@@ -35,7 +34,9 @@ public class Vehicle {
     @JoinColumn(name = "typeVehicle_id")
     TypeVehicle typeVehicle;
 
-
+    @ManyToOne
+    @JoinColumn(name = "carmanufacture_id")
+    Carmanufacture carmanufacture;
 
 
     public String getSerial() {
@@ -62,13 +63,6 @@ public class Vehicle {
         this.client = client;
     }
 
-    public String getCarManufacture() {
-        return carManufacture;
-    }
-
-    public void setCarManufacture(String carManufacture) {
-        this.carManufacture = carManufacture;
-    }
 
     public String getCarModel() {
         return carModel;

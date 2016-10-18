@@ -65,6 +65,13 @@ public class Contractor {
             inverseJoinColumns = {@JoinColumn(name = "typevehicle_id")})
     private Set<TypeVehicle> typeVehicles = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(name = "carmanufacture_join",
+            joinColumns = {@JoinColumn(name = "contractor_id")},
+            inverseJoinColumns = {@JoinColumn(name = "carmanufacture_id")})
+    private Set<Carmanufacture> carmanufactures = new HashSet<>();
+
+
     public Contractor() {
     }
 
