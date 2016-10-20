@@ -4,6 +4,7 @@ import com.autoservice.exception.AlreadyExistsException;
 import com.autoservice.exception.NotFoundException;
 import com.autoservice.model.Contractor;
 import com.autoservice.model.Rangeworks;
+import com.autoservice.repo.CarmanufactureRepository;
 import com.autoservice.repo.ContractorRepository;
 import com.autoservice.repo.RangeworksRepository;
 import com.autoservice.repo.TypeServiceRepository;
@@ -20,12 +21,14 @@ public class ContractorService {
     private final ContractorRepository contractorRepository;
     private final TypeServiceRepository typeServiceRepository;
     private final RangeworksRepository rangeworksRepository;
+    private final CarmanufactureRepository carmanufactureRepository;
 
     @Autowired
-    public ContractorService(ContractorRepository contractorRepository, TypeServiceRepository typeServiceRepository, RangeworksRepository rangeworksRepository) {
+    public ContractorService(ContractorRepository contractorRepository, TypeServiceRepository typeServiceRepository, RangeworksRepository rangeworksRepository, CarmanufactureRepository carmanufactureRepository) {
         this.contractorRepository = contractorRepository;
         this.typeServiceRepository = typeServiceRepository;
         this.rangeworksRepository = rangeworksRepository;
+        this.carmanufactureRepository = carmanufactureRepository;
     }
 
     public Contractor get(Long id) {
@@ -53,6 +56,9 @@ public class ContractorService {
     }
     public List<Contractor> getByRangeworks(Long id) {
         return contractorRepository.findByRangeworks(rangeworksRepository.findOne(id));
+    }
+    public List<Contractor> getByCarmanuf(Long id) {
+        return contractorRepository.findByCarmanufacture(carmanufactureRepository.findOne(id));
     }
     public List<Rangeworks> getAllRange(){
         return (List<Rangeworks>) rangeworksRepository.findAll();

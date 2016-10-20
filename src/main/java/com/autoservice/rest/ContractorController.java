@@ -24,22 +24,20 @@ public class ContractorController {
 
     @RequestMapping(value = "put", method = RequestMethod.PUT)
     public void create() {
-        Subworks subworks1 = new Subworks("s1");
-        Subworks subworks2 = new Subworks("s2");
-        Subworks subworks3 = new Subworks("s3");
-        Subworks subworks4 = new Subworks("s4");
-        Rangeworks rangeworks1 = new Rangeworks("r1");
-        Rangeworks rangeworks2 = new Rangeworks("r2");
-        rangeworks1.getSubworks().add(subworks1);
-        rangeworks1.getSubworks().add(subworks2);
-        rangeworks2.getSubworks().add(subworks3);
-        rangeworks2.getSubworks().add(subworks4);
+
         Contractor contractor1 = new Contractor("c1");
-        Contractor contractor2 = new Contractor("c2");
-        contractor1.getRangeworks().add(rangeworks1);
-        contractor2.getRangeworks().add(rangeworks2);
+        TypeService typeService = new TypeService("all");
+        TypeVehicle typeVehicle = new TypeVehicle("car1");
+        TypeVehicle typeVehicle1 = new TypeVehicle("car2");
+        TypeVehicle typeVehicle2 = new TypeVehicle("car3");
+        Carmanufacture carmanufacture = new Carmanufacture("Honda");
+        contractor1.getTypeServices().add(typeService);
+        contractor1.getTypeVehicles().add(typeVehicle1);
+      //  contractor1.getTypeVehicles().add(typeVehicle);
+        contractor1.getCarmanufacture().add(carmanufacture);
+
         contractorService.create(contractor1);
-        contractorService.create(contractor2);
+
 
     }
 
@@ -59,6 +57,12 @@ public class ContractorController {
     public List<Contractor> getByRangeworks(@PathVariable("id") Long id) {
 
         return contractorService.getByRangeworks(id);
+    }
+
+    @RequestMapping(value = "/getbycarmanuf/{id}", method = RequestMethod.GET)
+    public List<Contractor> getByCarmanuf(@PathVariable("id") Long id) {
+
+        return contractorService.getByCarmanuf(id);
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)

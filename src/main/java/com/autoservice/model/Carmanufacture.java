@@ -22,4 +22,39 @@ public class Carmanufacture {
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "typeVehicles")
     Set<Contractor> contractor= new HashSet<Contractor>();
+
+    public Carmanufacture() {
+    }
+
+    public Carmanufacture(String name) {
+        this.name = name;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(Set<Vehicle> vehicles) {
+        this.vehicles = vehicles;
+    }
+
+    public Set<Contractor> getContractor() {
+        return contractor;
+    }
+
+    public void setContractor(Set<Contractor> contractor) {
+        this.contractor = contractor;
+    }
 }

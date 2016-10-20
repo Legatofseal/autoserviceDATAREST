@@ -1,5 +1,7 @@
 package com.autoservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,16 +16,22 @@ public class TypeVehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany(mappedBy = "typeVehicle")
-    private Set<Vehicle> vehicles = new HashSet<Vehicle>();
+  @OneToMany(mappedBy = "typeVehicle", cascade = {CascadeType.ALL})
+  private Set<Vehicle> vehicles = new HashSet<Vehicle>();
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "typeVehicles")
     Set<Contractor> contractor= new HashSet<Contractor>();
 
-
-
     @Column
     String typeName;
+
+    public TypeVehicle() {
+    }
+
+    public TypeVehicle(String typeName) {
+        this.typeName = typeName;
+    }
 
     public long getId() {
         return id;
@@ -32,7 +40,6 @@ public class TypeVehicle {
     public void setId(long id) {
         this.id = id;
     }
-
 
     public Set<Contractor> getContractor() {
         return contractor;
@@ -58,11 +65,4 @@ public class TypeVehicle {
         this.vehicles = vehicles;
     }
 
-    public Set<Contractor> getContractors() {
-        return contractor;
-    }
-
-    public void setContractors(Set<Contractor> contractors) {
-        this.contractor = contractors;
-    }
 }

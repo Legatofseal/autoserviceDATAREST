@@ -31,13 +31,15 @@ public class Vehicle {
     String serial;
 
     @ManyToOne
-    @JoinColumn(name = "typeVehicle_id")
+    @JoinColumn(name = "typevehicle_id")
     TypeVehicle typeVehicle;
 
     @ManyToOne
     @JoinColumn(name = "carmanufacture_id")
     Carmanufacture carmanufacture;
 
+    public Vehicle() {
+    }
 
     public String getSerial() {
         return serial;

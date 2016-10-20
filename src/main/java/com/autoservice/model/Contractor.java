@@ -28,6 +28,11 @@ public class Contractor {
             inverseJoinColumns = {@JoinColumn(name = "rangeworks_id")})
     public Set<Rangeworks> rangeworks = new HashSet<>();
 
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "type_vehicle_join",
+            joinColumns = {@JoinColumn(name = "contractor_id")},
+            inverseJoinColumns = {@JoinColumn(name = "typevehicle_id")})
+    private Set<TypeVehicle> typeVehicles = new HashSet<>();
 
     public Set<Rangeworks> getRangeworks() {
         return rangeworks;
@@ -38,7 +43,6 @@ public class Contractor {
     }
 
     @Column
-
     String email;
 
     @Column
@@ -59,17 +63,12 @@ public class Contractor {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @ManyToMany
-    @JoinTable(name = "type_vehicle_join",
-            joinColumns = {@JoinColumn(name = "contractor_id")},
-            inverseJoinColumns = {@JoinColumn(name = "typevehicle_id")})
-    private Set<TypeVehicle> typeVehicles = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "carmanufacture_join",
             joinColumns = {@JoinColumn(name = "contractor_id")},
             inverseJoinColumns = {@JoinColumn(name = "carmanufacture_id")})
-    private Set<Carmanufacture> carmanufactures = new HashSet<>();
+    private Set<Carmanufacture> carmanufacture = new HashSet<>();
 
 
     public Contractor() {
@@ -86,6 +85,22 @@ public class Contractor {
     public Contractor(String name, String email) {
         this.name = name;
         this.email = email;
+    }
+
+    public Set<Carmanufacture> getCarmanufacture() {
+        return carmanufacture;
+    }
+
+    public void setCarmanufacture(Set<Carmanufacture> carmanufacture) {
+        this.carmanufacture = carmanufacture;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 
     public Long getId() {

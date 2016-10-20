@@ -1,9 +1,6 @@
 package com.autoservice.repo;
 
-import com.autoservice.model.Comment;
-import com.autoservice.model.Contractor;
-import com.autoservice.model.Rangeworks;
-import com.autoservice.model.TypeService;
+import com.autoservice.model.*;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
@@ -16,5 +13,5 @@ public interface ContractorRepository extends CrudRepository<Contractor, Long> {
     List<Contractor> findByTypeServices(@Param("typeServices") TypeService typeServices);
 
     List<Contractor> findByRangeworks(@Param("rangeworks") Rangeworks rangeworks);
-
+    List<Contractor> findByCarmanufacture(@Param("rangeworks") Carmanufacture carmanufacture);
 }
