@@ -31,7 +31,7 @@ public class CommentController {
 
     @RequestMapping(value = "/addcomment", method = RequestMethod.PUT)
     public void addComment() {
-        commentService.create(new Comment(clientService.get((long) 5), contractorService.get((long) 1), "message", 3));
+        commentService.create(new Comment(clientService.get((long) 1), contractorService.get((long) 1), "message", 3));
     }
     @RequestMapping(value = "/getcommentsbyclient/{id}", method = RequestMethod.GET)
     public List<Comment> getCommentByClient(@PathVariable("id") Long id) {

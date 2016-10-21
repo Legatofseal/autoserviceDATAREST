@@ -65,14 +65,15 @@ public class ClientController {
         clientService.deleteByEmail(mail);
     }
 
-    @RequestMapping(value = "/updatemailbyid/{id},{mail:.+}", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/updatemailbyid/{id},{mail:.+}", method = RequestMethod.PUT)
     public Client updateEmailById(@PathVariable("id") Long id, @PathVariable("mail") String mail) {
         return clientService.updateEmailByID(id, mail);
     }
 
-    @RequestMapping(value = "put", method = RequestMethod.PUT)
+    @RequestMapping(value = "/put", method = RequestMethod.PUT)
     public void create() {
-        // return personService.create(personDto);
+       Client client = new Client("Alx", "rr","pass");
+        clientService.create(client);
     }
 
     @RequestMapping(value = "/updateavatarbyid/{id},{avatar}", method = RequestMethod.PATCH)

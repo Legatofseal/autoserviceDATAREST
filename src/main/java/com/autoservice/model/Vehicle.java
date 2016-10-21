@@ -1,5 +1,7 @@
 package com.autoservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -29,6 +31,7 @@ public class Vehicle {
 
     @Column
     String serial;
+
 
     @ManyToOne
     @JoinColumn(name = "typevehicle_id")

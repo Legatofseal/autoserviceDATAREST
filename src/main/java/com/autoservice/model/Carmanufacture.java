@@ -1,5 +1,7 @@
 package com.autoservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,6 +22,7 @@ public class Carmanufacture {
     @OneToMany(mappedBy = "carmanufacture")
     private Set<Vehicle> vehicles = new HashSet<Vehicle>();
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "typeVehicles")
     Set<Contractor> contractor= new HashSet<Contractor>();
 

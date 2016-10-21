@@ -12,4 +12,5 @@ import java.util.List;
  */
 public interface AddressRepository extends CrudRepository<Address, Long> {
     List<Address> findByArea(@Param("area") String area);
+    List<Address> findByAreaAndCity(@Param("area") String area,@Param("city") String city);
 }

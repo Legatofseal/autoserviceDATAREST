@@ -14,14 +14,16 @@ public class TypeVehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-  @OneToMany(mappedBy = "typeVehicle", cascade = {CascadeType.ALL})
-  private Set<Vehicle> vehicles = new HashSet<Vehicle>();
+
+
+    @OneToMany(mappedBy = "typeVehicle", cascade = {CascadeType.ALL})
+    private Set<Vehicle> vehicles = new HashSet<Vehicle>();
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "typeVehicles")
-    Set<Contractor> contractor= new HashSet<Contractor>();
+    Set<Contractor> contractor = new HashSet<Contractor>();
 
     @Column
     String typeName;
@@ -33,11 +35,11 @@ public class TypeVehicle {
         this.typeName = typeName;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -48,6 +50,7 @@ public class TypeVehicle {
     public void setContractor(Set<Contractor> contractor) {
         this.contractor = contractor;
     }
+
 
     public String getTypeName() {
         return typeName;

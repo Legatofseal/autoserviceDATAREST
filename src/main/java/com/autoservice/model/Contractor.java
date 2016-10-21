@@ -82,6 +82,9 @@ public class Contractor {
     @OneToMany(mappedBy = "contractor")
     private Set<Comment> comments = new HashSet<>();
 
+    @OneToMany(mappedBy = "contractor")
+    private Set<Phone> phones = new HashSet<>();
+
     public Contractor(String name, String email) {
         this.name = name;
         this.email = email;
@@ -191,7 +194,14 @@ public class Contractor {
         this.typeVehicles = typeVehicles;
     }
 
- /*   public Set<Comment> getComments() {
+    public Set<Phone> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(Set<Phone> phones) {
+        this.phones = phones;
+    }
+/*   public Set<Comment> getComments() {
         return comments;
     }
 

@@ -14,12 +14,13 @@ import java.util.Set;
 public class TypeService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
 
     @Column
     String name;
-    @JsonIgnore
+
+
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "typeServices")
     Set<Contractor> contractor = new HashSet<Contractor>();
 
@@ -30,11 +31,12 @@ public class TypeService {
         this.name = name;
     }
 
-    public long getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -46,6 +48,7 @@ public class TypeService {
         this.name = name;
     }
 
+    @JsonIgnore
     public Set<Contractor> getContractor() {
         return contractor;
     }
