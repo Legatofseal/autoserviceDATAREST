@@ -18,17 +18,20 @@ public class TypeVehicleController {
         this.typeVehicleService = typeVehicleService;
     }
 
-
+//Create new typeVehicle
     @RequestMapping(value = "/put", method = RequestMethod.PUT)
     public void create(@RequestBody TypeVehicle typeVehicle) {
         typeVehicleService.create(typeVehicle);
     }
 
+    //Get typeVehicle by id
     @RequestMapping(value = "/getbyid/{id}", method = RequestMethod.GET)
     public TypeVehicle getById(@PathVariable("id") Long id) {
 
         return typeVehicleService.get(id);
     }
+
+    //get all typeVehicles
     @RequestMapping(value = "/getall", method = RequestMethod.GET)
     public List<TypeVehicle> getAll() {
 

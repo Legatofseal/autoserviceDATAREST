@@ -23,23 +23,26 @@ public class VehicleController {
         this.vehicleService = vehicleService;
     }
 
+    //Create new Vehicle
     @RequestMapping(value = "/createvehicle/", method = RequestMethod.PUT)
     public void addVehicle(@RequestBody Vehicle vehicle) {
         vehicleService.create(vehicle);
 
     }
-
+//delete vehicle by ID
     @RequestMapping(value = "/deletevehicle/{id}", method = RequestMethod.DELETE)
     public void deleteVehicle(@PathVariable("id") Long id) {
         vehicleService.deleteById(id);
 
     }
-
+//Get Vehicle by ID
     @RequestMapping(value = "/getbyid/{id}", method = RequestMethod.GET)
     public Vehicle getById(@PathVariable("id") Long id) {
 
         return vehicleService.get(id);
     }
+
+    //get all vehicles
     @RequestMapping(value = "/getall", method = RequestMethod.GET)
     public List<Vehicle> getAll() {
 
