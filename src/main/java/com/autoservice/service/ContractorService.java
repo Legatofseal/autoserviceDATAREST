@@ -20,14 +20,16 @@ public class ContractorService {
     private final RangeworksRepository rangeworksRepository;
     private final CarmanufactureRepository carmanufactureRepository;
     private final AddressRepository addressRepository;
+    private final TypeVehicleRepository typeVehicleRepository;
 
     @Autowired
-    public ContractorService(ContractorRepository contractorRepository, TypeServiceRepository typeServiceRepository, RangeworksRepository rangeworksRepository, CarmanufactureRepository carmanufactureRepository, AddressRepository addressRepository) {
+    public ContractorService(ContractorRepository contractorRepository, TypeServiceRepository typeServiceRepository, RangeworksRepository rangeworksRepository, CarmanufactureRepository carmanufactureRepository, AddressRepository addressRepository, TypeVehicleRepository typeVehicleRepository) {
         this.contractorRepository = contractorRepository;
         this.typeServiceRepository = typeServiceRepository;
         this.rangeworksRepository = rangeworksRepository;
         this.carmanufactureRepository = carmanufactureRepository;
         this.addressRepository = addressRepository;
+        this.typeVehicleRepository = typeVehicleRepository;
     }
 
     public Contractor get(Long id) {
@@ -36,6 +38,10 @@ public class ContractorService {
             throw new NotFoundException("Contractor", id);
         }
         return contractor;
+    }
+
+    public Contractor getByEmail (String email){
+        return (Contractor) contractorRepository.findByEmail(email);
     }
 
     public Contractor create(Contractor contractor) {
@@ -88,12 +94,13 @@ public class ContractorService {
         return (List<Rangeworks>) rangeworksRepository.findAll();
     }
 
-    public void addTypeService(Long id, TypeService typeService){
+    public void addTypeService(Long id, Long idtpserv){
 
         Contractor contractor = contractorRepository.findOne(id);
-        contractor.getTypeServices().add(typeService);
+        contractor.getTypeServices().add(typeServiceRepository.findOne(idtpserv));
         contractorRepository.save(contractor);
     }
+
     public void removeTypeService (Long idcon, Long idtpserv){
         Contractor contractor = contractorRepository.findOne(idcon);
         for (TypeService typeService:contractor.getTypeServices()){
@@ -147,9 +154,9 @@ public class ContractorService {
         contractorRepository.save(contractor);
     }
 
-    public void addTypeVehicle(Long id, TypeVehicle typeVehicle) {
+    public void addTypeVehicle(Long id, Long idtpveh) {
         Contractor contractor = contractorRepository.findOne(id);
-        contractor.getTypeVehicles().add(typeVehicle);
+        contractor.getTypeVehicles().add(typeVehicleRepository.findOne(idtpveh));
         contractorRepository.save(contractor);
     }
 
@@ -160,6 +167,61 @@ public class ContractorService {
                 contractor.getTypeServices().remove(typeVehicle);
             }
         }
+        contractorRepository.save(contractor);
+    }
+
+    public List<Contractor> getByTypeVehicle(Long id) {
+        return  contractorRepository.findByTypeVehicles(typeVehicleRepository.findOne(id));
+    }
+
+    public void delete (Long id){
+        contractorRepository.delete(id);
+    }
+
+    public void addRangeworks(Long idcon, Long idrangew) {
+        Contractor contractor = contractorRepository.findOne(idcon);
+        contractor.getRangeworks().add(rangeworksRepository.findOne(idrangew));
+        contractorRepository.save(contractor);
+    }
+
+
+    public void removeRangework(Long idcon, Long idrangew) {
+        Contractor contractor = contractorRepository.findOne(idcon);
+        for (Rangeworks rangework :contractor.getRangeworks()){
+            if (rangework.getId().equals(idrangew)){
+                contractor.getTypeServices().remove(rangework);
+            }
+        }
+        contractorRepository.save(contractor);
+    }
+
+    public void addCarmanuf(Long idcon, Long idcarmanuf) {
+        Contractor contractor = contractorRepository.findOne(idcon);
+        contractor.getCarmanufacture().add(carmanufactureRepository.findOne(idcarmanuf));
+        contractorRepository.save(contractor);
+    }
+
+    public void removeCarmanuf(Long idcon, Long idcarmanuf) {
+        Contractor contractor = contractorRepository.findOne(idcon);
+        for (Carmanufacture carmanuf :contractor.getCarmanufacture()){
+            if (carmanuf.getId().equals(idcarmanuf)){
+                contractor.getCarmanufacture().remove(carmanuf);
+            }
+        }
+        contractorRepository.save(contractor);
+    }
+
+
+    public void updateUrl(Long idcon, String url) {
+        Contractor contractor = contractorRepository.findOne(idcon);
+        contractor.setUrl(url);
+        contractorRepository.save(contractor);
+    }
+
+
+    public void updateAvatar(Long idcon, String avatar) {
+        Contractor contractor = contractorRepository.findOne(idcon);
+        contractor.setAvatar(avatar);
         contractorRepository.save(contractor);
     }
 }

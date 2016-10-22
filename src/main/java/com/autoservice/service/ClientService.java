@@ -2,10 +2,9 @@ package com.autoservice.service;
 
 import com.autoservice.exception.AlreadyExistsException;
 import com.autoservice.exception.NotFoundException;
-import com.autoservice.model.Address;
-import com.autoservice.model.Client;
-import com.autoservice.model.Person;
+import com.autoservice.model.*;
 import com.autoservice.repo.ClientRepository;
+import com.autoservice.repo.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +19,12 @@ import java.util.stream.StreamSupport;
 @Service
 public class ClientService {
     private final ClientRepository clientRepository;
+    private final VehicleRepository vehicleReposotory;
+    
     @Autowired
-    public ClientService(ClientRepository clientRepository) {
+    public ClientService(ClientRepository clientRepository, VehicleRepository vehicleReposotory) {
         this.clientRepository = clientRepository;
+        this.vehicleReposotory = vehicleReposotory;
     }
     public Client get(Long id) {
         Client client = clientRepository.findOne(id);
@@ -81,6 +83,24 @@ public class ClientService {
     public void updateAddressByID(Long id, Address address){
         Client client = clientRepository.findOne(id);
         client.setAddress(address);
+        clientRepository.save(client);
+    }
+
+    public void addVehicle(Long idcl, Long idveh) {
+        Client client = clientRepository.findOne(idcl);
+        client.getVehicles().add(vehicleReposotory.findOne(idcl));
+        clientRepository.save(client);
+                
+    }
+
+
+    public void remoVehicle(Long idcl, Long idveh) {
+        Client client = clientRepository.findOne(idcl);
+        for (Vehicle vehicle :client.getVehicles()){
+            if (client.getId().equals(idveh)){
+                client.getVehicles().remove(vehicle);
+            }
+        }
         clientRepository.save(client);
     }
 }

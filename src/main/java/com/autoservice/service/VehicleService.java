@@ -9,6 +9,8 @@ import com.autoservice.repo.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by Legat on 9/28/2016.
  */
@@ -25,6 +27,9 @@ public class VehicleService {
             throw new NotFoundException("Vehicle", id);
         }
         return vehicle;
+    }
+    public List<Vehicle> getAll(){
+        return (List<Vehicle>) vehicleRepository.findAll();
     }
 
 

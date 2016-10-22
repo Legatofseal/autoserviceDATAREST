@@ -21,75 +21,97 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-
+//For testing purposes
     @RequestMapping(value = "/ping", produces = MediaType.TEXT_PLAIN_VALUE)
     public String ping() {
         return "PONG-client";
     }
 
-
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+// Get Client by by ID
+    @RequestMapping(value = "/byid/{id}", method = RequestMethod.GET)
     public Client get(@PathVariable("id") Long id) {
         return clientService.get(id);
     }
 
+    // Get All Clients
     @RequestMapping(method = RequestMethod.GET)
     public List<Client> getAll() {
         return clientService.getAll();
     }
 
+    //Get mail by clients ID
     @RequestMapping(value = "/mailbylid/{id}", method = RequestMethod.GET)
     public String mailbyid(@PathVariable("id") Long id) {
         return clientService.get(id).getEmail();
     }
 
+
+    //get client by email
     @RequestMapping(value = "/clientbymail/{mail:.+}", method = RequestMethod.GET)
     public List<Client> mailbyid(@PathVariable("mail") String mail) {
         return clientService.getClientByMail(mail);
     }
 
+    //check client data
     @RequestMapping(value = "/chkclientdata/{mail:.+},{password}", method = RequestMethod.GET)
     public boolean chkClientData(@PathVariable("mail") String mail, @PathVariable("password") String password) {
         return clientService.ChkClientData(mail, password);
 
     }
 
+    //Create client by name, password, mail
     @RequestMapping(value = "/createclient/{name},{mail:.+},{password}", method = RequestMethod.PUT)
     public Client addClient(@PathVariable("mail") String name, @PathVariable("mail") String mail, @PathVariable("password") String password) {
         return clientService.create(new Client(name, mail, password));
 
     }
 
+    //Delete client by ID
     @RequestMapping(value = "/deleteclient/{mail:.+}", method = RequestMethod.DELETE)
     public void deleteClient(@PathVariable("mail") String mail) {
         clientService.deleteByEmail(mail);
     }
 
-    @RequestMapping(value = "/updatemailbyid/{id},{mail:.+}", method = RequestMethod.PUT)
+    //Change email in client
+    @RequestMapping(value = "/{id}/updatemailbyid/{mail:.+}", method = RequestMethod.PUT)
     public Client updateEmailById(@PathVariable("id") Long id, @PathVariable("mail") String mail) {
         return clientService.updateEmailByID(id, mail);
     }
-
+// Creation client for testing purposes
     @RequestMapping(value = "/put", method = RequestMethod.PUT)
     public void create() {
        Client client = new Client("Alx", "rr","pass");
         clientService.create(client);
     }
-
-    @RequestMapping(value = "/updateavatarbyid/{id},{avatar}", method = RequestMethod.PATCH)
+// Update avatar string in client
+    @RequestMapping(value = "/{id}/updateavatarbyid/{avatar}", method = RequestMethod.PATCH)
     public void updateAvatarById(@PathVariable("id") Long id, @PathVariable("avatar") String avatar) {
         clientService.updateAvatarByID(id, avatar);
     }
 
-    @RequestMapping(value = "/updatepasswordbyid/{id},{avatar}", method = RequestMethod.PATCH)
+//Update password in client
+    @RequestMapping(value = "/{id}/updatepasswordbyid/{password}", method = RequestMethod.PATCH)
     public void updatePasswordById(@PathVariable("id") Long id, @PathVariable("password") String password) {
         clientService.updatePasswordByID(id, password);
     }
 
-    @RequestMapping(value = "/updateaddressbyid/", method = RequestMethod.PATCH)
-    public void updateAddressById(@PathVariable("id") Long id) {
-        Address address = new Address();
+    // Update address by id in client
+    @RequestMapping(value = "/updateaddressbyid/{id}", method = RequestMethod.PATCH)
+    public void updateAddressById(@PathVariable("id") Long id, @RequestBody Address address) {
+        //
         clientService.updateAddressByID(id, address);
 
+    }
+//Add vehicle from base to client
+    @RequestMapping(value = "/{idcl}/addvehicle/{idveh}", method = RequestMethod.PUT)
+    public void addVehicle(@PathVariable("idcon") Long idcl, @PathVariable("idveh") Long idveh) {
+
+        clientService.addVehicle(idcl, idveh);
+    }
+//Delete vehicle in client
+    @RequestMapping(value = "/{idcon}/deletevehicle/{idveh}", method = RequestMethod.PUT)
+    public void  DeleteTypeService(@PathVariable("idcon") Long idcon, @PathVariable("idveh") Long idveh) {
+
+        clientService.remoVehicle(idcon, idveh);
     }
 }

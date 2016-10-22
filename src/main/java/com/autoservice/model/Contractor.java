@@ -51,6 +51,7 @@ public class Contractor {
     @Column
     String phone;
 
+
     @Column
     String fax;
 
@@ -58,6 +59,11 @@ public class Contractor {
     String workingDays;
     @Column
     String workingHours;
+    @Column
+    String url;
+    @Column
+    String avatar;
+
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "address_id")
@@ -201,11 +207,28 @@ public class Contractor {
     public void setPhones(Set<Phone> phones) {
         this.phones = phones;
     }
-/*   public Set<Comment> getComments() {
-        return comments;
+
+    public String getUrl() {
+        return url;
     }
 
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
-    }*/
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    /*   public Set<Comment> getComments() {
+            return comments;
+        }
+
+        public void setComments(Set<Comment> comments) {
+            this.comments = comments;
+        }*/
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
 }

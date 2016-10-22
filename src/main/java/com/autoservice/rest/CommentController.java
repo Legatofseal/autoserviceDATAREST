@@ -28,21 +28,26 @@ public class CommentController {
         this.contractorService = contractorService;
     }
 
-
+// Add comment
     @RequestMapping(value = "/addcomment", method = RequestMethod.PUT)
-    public void addComment() {
-        commentService.create(new Comment(clientService.get((long) 1), contractorService.get((long) 1), "message", 3));
+    public void addComment(@RequestBody Comment comment) {
+        commentService.create(comment);
     }
+
+    //get all comment by client id
     @RequestMapping(value = "/getcommentsbyclient/{id}", method = RequestMethod.GET)
     public List<Comment> getCommentByClient(@PathVariable("id") Long id) {
         return commentService.getCommentsByClient(id);
     }
 
+    // get all comments by contractor id
     @RequestMapping(value = "/getcommentsbycontractor/{id}", method = RequestMethod.GET)
     public List<Comment> getCommentByContractor(@PathVariable("id") Long id) {
         return commentService.getCommentsByContractor(id);
     }
 
+
+    //get number of last comments
     @RequestMapping(value = "/getcommentsbydate/{number}", method = RequestMethod.GET)
     public List<Comment> getCommentByDate(@PathVariable("number") int number) {
         ArrayList<Comment> tempList = (ArrayList<Comment>) commentService.getAllbyDate();

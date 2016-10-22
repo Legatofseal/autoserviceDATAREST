@@ -1,14 +1,14 @@
 package com.autoservice.rest;
 
 import com.autoservice.model.Client;
+import com.autoservice.model.Rangeworks;
 import com.autoservice.model.TypeVehicle;
 import com.autoservice.model.Vehicle;
 import com.autoservice.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by Legat on 10/8/2016.
@@ -24,7 +24,8 @@ public class VehicleController {
     }
 
     @RequestMapping(value = "/createvehicle/", method = RequestMethod.PUT)
-    public void addVehicle() {
+    public void addVehicle(@RequestBody Vehicle vehicle) {
+        vehicleService.create(vehicle);
 
     }
 
@@ -32,5 +33,16 @@ public class VehicleController {
     public void deleteVehicle(@PathVariable("id") Long id) {
         vehicleService.deleteById(id);
 
+    }
+
+    @RequestMapping(value = "/getbyid/{id}", method = RequestMethod.GET)
+    public Vehicle getById(@PathVariable("id") Long id) {
+
+        return vehicleService.get(id);
+    }
+    @RequestMapping(value = "/getall", method = RequestMethod.GET)
+    public List<Vehicle> getAll() {
+
+        return vehicleService.getAll();
     }
 }

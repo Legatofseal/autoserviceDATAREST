@@ -13,10 +13,11 @@ import java.util.List;
  */
 public interface ContractorRepository extends CrudRepository<Contractor, Long> {
     List<Contractor> findByTypeServices(@Param("typeServices") TypeService typeServices);
-
+    List<Contractor> findByTypeVehicles(@Param("typeVehicles") TypeVehicle typeVehicles);
     List<Contractor> findByRangeworks(@Param("rangeworks") Rangeworks rangeworks);
     List<Contractor> findByCarmanufacture(@Param("rangeworks") Carmanufacture carmanufacture);
     List<Contractor> findByAddress(@Param("address") Address address);
+    List<Contractor> findByEmail(@Param("email")String email);
 
 
 
