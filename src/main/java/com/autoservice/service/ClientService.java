@@ -57,8 +57,8 @@ public class ClientService {
         Client result = clientRepository.save(client);
         return client;
     }
-   public List<Client> getClientByMail(String email){
-        return clientRepository.findByEmail(email);
+   public Client getClientByMail(String email){
+        return (Client) clientRepository.findByEmail(email);
     }
 
     public void deleteByEmail(String email){

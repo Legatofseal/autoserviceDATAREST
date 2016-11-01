@@ -48,8 +48,25 @@ public class ClientController {
 
     //get client by email
     @RequestMapping(value = "/clientbymail/{mail:.+}", method = RequestMethod.GET)
-    public List<Client> mailbyid(@PathVariable("mail") String mail) {
+    public Client mailbyid(@PathVariable("mail") String mail) {
         return clientService.getClientByMail(mail);
+    }
+
+    //get client by email
+    @RequestMapping(value = "/login/", method = RequestMethod.POST)
+    public AuthClnt mailbyid(@RequestParam("email") String email, @RequestParam("password") String password) {
+        Client temp = clientService.getClientByMail(email);
+        if (!temp.equals(null)){
+            if (temp.getPassword().equals(password)){
+                return  new AuthClnt(temp.getId(),temp.getName(),true);
+            }
+            else {
+                return new AuthClnt();
+            }
+        }
+        else {
+            return  new AuthClnt();
+        }
     }
 
     //check client data
