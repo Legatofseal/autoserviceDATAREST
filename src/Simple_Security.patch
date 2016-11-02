@@ -1,0 +1,239 @@
+Index: src/main/java/com/autoservice/configuration/SpringMvcInitializer.java
+===================================================================
+--- src/main/java/com/autoservice/configuration/SpringMvcInitializer.java	(revision 38b900b9ed5334b5b463f0fa5b35c391e3e63442)
++++ src/main/java/com/autoservice/configuration/SpringMvcInitializer.java	(revision 38b900b9ed5334b5b463f0fa5b35c391e3e63442)
+@@ -1,22 +0,0 @@
+-package com.autoservice.configuration;
+-
+-import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+-
+-public class SpringMvcInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+-
+-	@Override
+-	protected Class<?>[] getRootConfigClasses() {
+-		return new Class[] { HelloWorldConfiguration.class };
+-	}
+- 
+-	@Override
+-	protected Class<?>[] getServletConfigClasses() {
+-		return null;
+-	}
+- 
+-	@Override
+-	protected String[] getServletMappings() {
+-		return new String[] { "/" };
+-	}
+-
+-}
+Index: src/main/java/com/autoservice/configuration/SecurityConfiguration.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/autoservice/configuration/SecurityConfiguration.java	(revision 38b900b9ed5334b5b463f0fa5b35c391e3e63442)
++++ src/main/java/com/autoservice/configuration/SecurityConfiguration.java	(revision )
+@@ -1,9 +1,10 @@
+ package com.autoservice.configuration;
+ 
+-import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.boot.autoconfigure.security.Http401AuthenticationEntryPoint;
+ import org.springframework.context.annotation.Configuration;
+ import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
++import org.springframework.security.config.annotation.web.builders.WebSecurity;
+ import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+ import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+ 
+@@ -11,22 +12,37 @@
+ @EnableWebSecurity
+ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+ 
+-	@Autowired
+-	public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
++    @Override
++    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+-		auth.inMemoryAuthentication().withUser("client").password("client").roles("client");
+-		auth.inMemoryAuthentication().withUser("contr").password("contr").roles("cont");
+-		//auth.inMemoryAuthentication().withUser("dba").password("root123").roles("ADMIN","DBA");
+-	}
+-	
+-	@Override
++        auth.inMemoryAuthentication().withUser("client").password("client").roles("client");
++        auth.inMemoryAuthentication().withUser("contr").password("contr").roles("cont");
++        //auth.inMemoryAuthentication().withUser("dba").password("root123").roles("ADMIN","DBA");
++    }
++
++    @Override
+-	protected void configure(HttpSecurity http) throws Exception {
++    public void configure(WebSecurity web) throws Exception {
++        //Spring Security ignores request to static resources such as CSS or JS files.
++        web.ignoring()
++                .antMatchers(
++                        "/error/**",
++                        "/css/**",
++                        "/img/**",
++                        "/js/**",
++                        "/fonts/**",
++                        "/favicon.ico"
++                );
++    }
+- 
++
++    @Override
++    protected void configure(HttpSecurity http) throws Exception {
+-	  http.authorizeRequests()
++        http.authorizeRequests()
+-	  	.antMatchers("/", "/home").permitAll() 
+-		.antMatchers("/clients/**").access("hasRole('client')").and().formLogin().loginPage("/login")
++                .antMatchers("/").permitAll()
++                .antMatchers("/**").authenticated()
++                .antMatchers("/clients/**").access("hasRole('client')")
++                .and().formLogin()
+-			  .usernameParameter("email").passwordParameter("password")
++                .usernameParameter("email").passwordParameter("password")
+-			  .and().csrf()
+-			  .and().exceptionHandling().accessDeniedPage("/Access_Denied");
+- 
++                .and().logout().logoutSuccessUrl("/")
++                .and().exceptionHandling().authenticationEntryPoint(new Http401AuthenticationEntryPoint(""))
++                .and().csrf().disable();
+-	}
++    }
+ }
+Index: src/main/java/com/autoservice/configuration/HelloWorldConfiguration.java
+===================================================================
+--- src/main/java/com/autoservice/configuration/HelloWorldConfiguration.java	(revision 38b900b9ed5334b5b463f0fa5b35c391e3e63442)
++++ src/main/java/com/autoservice/configuration/HelloWorldConfiguration.java	(revision 38b900b9ed5334b5b463f0fa5b35c391e3e63442)
+@@ -1,26 +0,0 @@
+-package com.autoservice.configuration;
+-
+-import org.springframework.context.annotation.Bean;
+-import org.springframework.context.annotation.ComponentScan;
+-import org.springframework.context.annotation.Configuration;
+-import org.springframework.web.servlet.ViewResolver;
+-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+-import org.springframework.web.servlet.view.InternalResourceViewResolver;
+-import org.springframework.web.servlet.view.JstlView;
+-
+-@Configuration
+-@EnableWebMvc
+-@ComponentScan(basePackages = "com.websystique.springsecurity")
+-public class HelloWorldConfiguration {
+-	
+-	@Bean(name="HelloWorld")
+-	public ViewResolver viewResolver() {
+-		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+-		viewResolver.setViewClass(JstlView.class);
+-		viewResolver.setPrefix("/WEB-INF/views/");
+-		viewResolver.setSuffix(".jsp");
+-
+-		return viewResolver;
+-	}
+-
+-}
+\ No newline at end of file
+Index: src/main/java/com/autoservice/configuration/SecurityWebApplicationInitializer.java
+===================================================================
+--- src/main/java/com/autoservice/configuration/SecurityWebApplicationInitializer.java	(revision 38b900b9ed5334b5b463f0fa5b35c391e3e63442)
++++ src/main/java/com/autoservice/configuration/SecurityWebApplicationInitializer.java	(revision 38b900b9ed5334b5b463f0fa5b35c391e3e63442)
+@@ -1,7 +0,0 @@
+-package com.autoservice.configuration;
+-
+-import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+-
+-public class SecurityWebApplicationInitializer extends AbstractSecurityWebApplicationInitializer {
+-
+-}
+Index: src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/application.properties	(revision 38b900b9ed5334b5b463f0fa5b35c391e3e63442)
++++ src/main/resources/application.properties	(revision )
+@@ -7,3 +7,5 @@
+ spring.jpa.hibernate.ddl-auto=create
+ # Or Update DB schema on startup
+ #spring.jpa.hibernate.ddl-auto=update
++
++spring.resources.cache-period=0
+Index: src/main/java/com/autoservice/rest/GeneralController.java
+===================================================================
+--- src/main/java/com/autoservice/rest/GeneralController.java	(revision 38b900b9ed5334b5b463f0fa5b35c391e3e63442)
++++ src/main/java/com/autoservice/rest/GeneralController.java	(revision 38b900b9ed5334b5b463f0fa5b35c391e3e63442)
+@@ -1,36 +0,0 @@
+-package com.autoservice.rest;
+-
+-import org.springframework.security.core.Authentication;
+-import org.springframework.security.core.context.SecurityContextHolder;
+-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+-import org.springframework.web.bind.annotation.RequestMapping;
+-import org.springframework.web.bind.annotation.RequestMethod;
+-import org.springframework.web.bind.annotation.RestController;
+-import com.autoservice.model.*;
+-import com.autoservice.service.ContractorService;
+-import org.springframework.stereotype.Service;
+-import org.springframework.web.bind.annotation.*;
+-
+-import javax.servlet.http.HttpServletRequest;
+-import javax.servlet.http.HttpServletResponse;
+-
+-/**
+- * Created by Legat on 10/28/2016.
+- */
+-@RestController
+-public class GeneralController {
+-
+-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+-    public String loginPage() {
+-        return "login";
+-    }
+-
+-    @RequestMapping(value="/logout", method = RequestMethod.GET)
+-    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+-        if (auth != null){
+-            new SecurityContextLogoutHandler().logout(request, response, auth);
+-        }
+-        return "redirect:/login?logout";
+-    }
+-}
+Index: src/main/resources/static/login.html
+===================================================================
+--- src/main/resources/static/login.html	(revision 38b900b9ed5334b5b463f0fa5b35c391e3e63442)
++++ src/main/resources/static/index.html	(revision )
+@@ -1,8 +1,8 @@
+ <div class="container-fluid">
+     <div class="row">
+         <div class="col-md-6">
+-            <h1>Login</h1>
+-            <form name="form" ng-submit="authLogin(user)" role="form">
++            <h1>Login aaa</h1>
++            <form name="form" action="/login" method="post" role="form">
+                 <div class="form-group">
+                     <div id="alert" role="alert"></div><br>
+ 
+@@ -10,14 +10,14 @@
+                     <label for="exampleInputEmail1">
+                         Email address
+                     </label>
+-                    <input type="email" class="form-control" id="exampleInputEmail1" ng-model="user.email" required/>
++                    <input type="text" class="form-control" id="exampleInputEmail1" name="email" ng-model="user.email" required/>
+                 </div>
+                 <div class="form-group">
+ 
+                     <label for="exampleInputPassword1">
+                         Password
+                     </label>
+-                    <input type="password" class="form-control" id="exampleInputPassword1"  ng-model="user.password" required/>
++                    <input type="password" class="form-control" id="exampleInputPassword1" name="password" ng-model="user.password" required/>
+                 </div>
+ 
+                 <button type="submit" class="btn btn-default">
+@@ -26,4 +26,4 @@
+             </form>
+         </div>
+     </div>
+-</div>
+\ No newline at end of file
++</div>
