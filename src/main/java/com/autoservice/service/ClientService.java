@@ -34,7 +34,7 @@ public class ClientService {
         return client;
     }
     public boolean ChkClientData(String email, String password){
-        if (clientRepository.findByEmailAndPassword(email, password).size()!=0){
+        if (clientRepository.findByEmailAndPassword(email, password)!=null){
             return true;
         }
         else {

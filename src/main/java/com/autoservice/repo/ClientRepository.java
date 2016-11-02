@@ -16,9 +16,9 @@ import java.util.List;
  * Created by Legat on 9/27/2016.
  */
 public interface ClientRepository extends CrudRepository<Client, Long> {
-    List<Client> findByEmail(@Param("email") String email);
+    Client findByEmail(@Param("email") String email);
 
-    List<Client> findByEmailAndPassword(@Param("email") String email, @Param("password")String password);
+    Client findByEmailAndPassword(@Param("email") String email, @Param("password")String password);
     @Transactional
     void deleteByEmail(@Param("email")String email);
 
