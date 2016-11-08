@@ -45,6 +45,11 @@ public class Client {
     @JoinColumn(name = "address_id")
     private Address address;
 
+
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "userauth_id")
+    private UserAuth userAuth;
+
     @Column
     private String avatar;
 
@@ -53,6 +58,21 @@ public class Client {
         this.email = email;
         this.password = password;
         this.address = null;
+    }
+
+    public Client(String name, String email, String password, UserAuth userAuth) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.userAuth = userAuth;
+    }
+
+    public UserAuth getUserAuth() {
+        return userAuth;
+    }
+
+    public void setUserAuth(UserAuth userAuth) {
+        this.userAuth = userAuth;
     }
 
     public Client() {

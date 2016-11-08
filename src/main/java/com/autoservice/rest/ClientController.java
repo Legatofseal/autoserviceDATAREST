@@ -52,22 +52,16 @@ public class ClientController {
         return clientService.getClientByMail(mail);
     }
 
-    //get client by email
-    @RequestMapping(value = "/login/", method = RequestMethod.POST)
-    public AuthClnt mailbyid(@RequestParam("email") String email, @RequestParam("password") String password) {
-        Client temp = clientService.getClientByMail(email);
-        if (!temp.equals(null)){
-            if (temp.getPassword().equals(password)){
-                return  new AuthClnt(temp.getId(),temp.getName(),true);
-            }
-            else {
-                return new AuthClnt();
-            }
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public Client login(@RequestParam String email, @RequestParam String password) {
+        if (clientService.getClientByMail(email).getPassword().equals(password)){
+            return clientService.getClientByMail(email);
         }
-        else {
-            return  new AuthClnt();
-        }
+        else return null;
+
     }
+    //get client by email
+
 
     //check client data
     @RequestMapping(value = "/chkclientdata/{mail:.+},{password}", method = RequestMethod.GET)
@@ -78,8 +72,8 @@ public class ClientController {
 
     //Create client by name, password, mail
     @RequestMapping(value = "/createclient/{name},{mail:.+},{password}", method = RequestMethod.PUT)
-    public Client addClient(@PathVariable("mail") String name, @PathVariable("mail") String mail, @PathVariable("password") String password) {
-        return clientService.create(new Client(name, mail, password));
+    public Client addClient(@PathVariable("name") String name, @PathVariable("mail") String mail, @PathVariable("password") String password) {
+        return clientService.create(new Client(name, mail, password, new UserAuth(mail,password,"ROLE_CLIENT")));
 
     }
 

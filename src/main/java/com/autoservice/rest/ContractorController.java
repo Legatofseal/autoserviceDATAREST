@@ -84,6 +84,9 @@ public class ContractorController {
         contractorService.create(contractor);
     }
 
+
+
+
     // delete contractor by ID
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.PUT)
     public void deleteContractor(@PathVariable("id") Long id) {

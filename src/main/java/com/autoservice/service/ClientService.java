@@ -4,6 +4,7 @@ import com.autoservice.exception.AlreadyExistsException;
 import com.autoservice.exception.NotFoundException;
 import com.autoservice.model.*;
 import com.autoservice.repo.ClientRepository;
+import com.autoservice.repo.UserauthRepository;
 import com.autoservice.repo.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,13 @@ import java.util.stream.StreamSupport;
 public class ClientService {
     private final ClientRepository clientRepository;
     private final VehicleRepository vehicleReposotory;
+    private final UserauthRepository userauthRepository;
     
     @Autowired
-    public ClientService(ClientRepository clientRepository, VehicleRepository vehicleReposotory) {
+    public ClientService(ClientRepository clientRepository, VehicleRepository vehicleReposotory, UserauthRepository userauthRepository) {
         this.clientRepository = clientRepository;
         this.vehicleReposotory = vehicleReposotory;
+        this.userauthRepository = userauthRepository;
     }
     public Client get(Long id) {
         Client client = clientRepository.findOne(id);
@@ -55,6 +58,8 @@ public class ClientService {
         }
 
         Client result = clientRepository.save(client);
+        UserAuth userAuth = new UserAuth(client.getEmail(), client.getPassword(), "ROLE_CLIENT");
+        userauthRepository.save(client.getUserAuth());
         return client;
     }
    public Client getClientByMail(String email){
